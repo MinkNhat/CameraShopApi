@@ -8,7 +8,7 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'subcategory', 'price', 'stock')
+    list_display = ('id', 'name', 'category', 'subcategory', 'price', 'stock')
 
 
 admin.site.register(Product, ProductAdmin)
@@ -17,5 +17,6 @@ admin.site.register(SubCategory, SubCategoryAdmin)
 admin.site.register(Manufacturer)
 admin.site.register(Order)
 admin.site.register(User)
+admin.site.register(ProductImage)
 
 

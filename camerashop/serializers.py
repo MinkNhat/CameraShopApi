@@ -45,8 +45,20 @@ class ManufacturerSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+class ProductImageSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['image'] = instance.image.url if instance.image else ''
+        return data
+
+    class Meta:
+        model = ProductImage
+        fields = ['id', 'image']
+
+
 class ProductSerializer(serializers.ModelSerializer):
     manufacturer = ManufacturerSerializer()
+    images = ProductImageSerializer(many=True)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -55,4 +67,4 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'manufacturer', 'price', 'stock', 'main_image']
+        fields = ['id', 'name', 'manufacturer', 'price', 'stock', 'main_image', 'images']

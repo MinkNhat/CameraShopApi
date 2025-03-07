@@ -31,7 +31,7 @@ class CustomTokenView(TokenView):
 
 
 class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
-    queryset = User.objects.filter(is_active=True)
+    queryset = User.objects.select_related('manufacturer').prefetch_related('images').filter(is_active=True)
     serializer_class = serializers.UserSerializer
     parser_classes = [parsers.MultiPartParser, parsers.JSONParser]
 
@@ -49,10 +49,10 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
 
 
 class CategoryViewSet(viewsets.ViewSet, generics.ListAPIView):
-    queryset = Category.objects.filter(active=True)
+    queryset = Category.objects.prefetch_related('subcategories').filter(active=True)
     serializer_class = serializers.CategorySerializer
 
 
-class ProductViewSet(viewsets.ViewSet, generics.ListAPIView):
+class ProductViewSet(viewsets.ViewSet, generics.ListAPIView, generics.RetrieveAPIView):
     queryset = Product.objects.filter(active=True)
     serializer_class = serializers.ProductSerializer
