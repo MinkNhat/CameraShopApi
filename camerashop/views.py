@@ -9,7 +9,7 @@ from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
-from camerashop import serializers
+from camerashop import serializers, paginators
 from camerashop.models import *
 
 
@@ -54,5 +54,29 @@ class CategoryViewSet(viewsets.ViewSet, generics.ListAPIView):
 
 
 class ProductViewSet(viewsets.ViewSet, generics.ListAPIView, generics.RetrieveAPIView):
-    queryset = Product.objects.filter(active=True)
     serializer_class = serializers.ProductSerializer
+    pagination_class = paginators.ItemPaginator
+
+    def get_queryset(self):
+        queryset = Product.objects.filter(active=True)
+
+        category_id = self.request.query_params.get("cate")
+        subcategory_id = self.request.query_params.get("subcate")
+        sort = self.request.query_params.get('sort')
+        q = self.request.query_params.get("q")
+
+        if category_id:
+            queryset = queryset.filter(category=category_id)
+        if subcategory_id:
+            queryset = queryset.filter(subcategory=subcategory_id)
+
+        if sort == "asc":
+            queryset = queryset.order_by("price")
+        elif sort == "desc":
+            queryset = queryset.order_by("-price")
+
+        if q:
+            queryset = queryset.filter(name__icontains=q)
+
+        return queryset
+

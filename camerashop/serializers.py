@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'password', 'last_name', 'first_name', 'avatar', 'email']
+        fields = ['id', 'username', 'password', 'last_name', 'first_name', 'avatar', 'email', 'is_superuser']
         extra_kwargs = {
             'password': {'write_only': True, 'required': True},
             'username': {'required': True},
@@ -67,4 +67,4 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'manufacturer', 'price', 'stock', 'main_image', 'images']
+        fields = ['id', 'name', 'manufacturer', 'price', 'stock', 'main_image', 'images', 'sale', 'stars']
