@@ -53,6 +53,16 @@ class CategoryViewSet(viewsets.ViewSet, generics.ListAPIView):
     serializer_class = serializers.CategorySerializer
 
 
+class SubCategoryViewSet(viewsets.ViewSet, generics.ListAPIView):
+    queryset = SubCategory.objects.filter(active=True)
+    serializer_class = serializers.SubCategorySerializer
+
+
+class ManufacturerViewSet(viewsets.ViewSet, generics.ListAPIView):
+    queryset = Manufacturer.objects.filter(active=True)
+    serializer_class = serializers.ManufacturerSerializer
+
+
 class ProductViewSet(viewsets.ViewSet, generics.ListAPIView, generics.RetrieveAPIView):
     serializer_class = serializers.ProductSerializer
     pagination_class = paginators.ItemPaginator

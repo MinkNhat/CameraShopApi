@@ -6,6 +6,8 @@ from camerashop import views
 r = DefaultRouter()
 r.register('users', views.UserViewSet, basename='user')
 r.register('categories', views.CategoryViewSet, basename='category')
+r.register('subcategories', views.SubCategoryViewSet, basename='subcategory')
+r.register('manufacturers', views.ManufacturerViewSet, basename='manufacturer')
 r.register('products', views.ProductViewSet, basename='product')
 
 urlpatterns = [

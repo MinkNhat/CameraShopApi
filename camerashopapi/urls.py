@@ -20,6 +20,7 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
+from camerashop.admin import admin_site
 from camerashop.views import CustomTokenView
 
 schema_view = get_schema_view(
@@ -34,7 +35,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('', include('camerashop.urls')),
-    path('admin/', admin.site.urls),
+    path('admin/', admin_site.urls),
     path('o/token/', CustomTokenView.as_view(), name='token'),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
